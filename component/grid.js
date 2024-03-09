@@ -19,10 +19,10 @@ export default function Grid() {
     }
     product();
   }, []);
-  
+
   return (
     <div className=" bg-neutral-50">
-      <div className=" bg-neutral-50 mx-auto max-w-7xl p-8 pb-16">
+      <div className=" bg-neutral-50 mx-auto max-w-7xl p-4 pb-16">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {loading ? (
             <>

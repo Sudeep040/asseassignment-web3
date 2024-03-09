@@ -34,7 +34,7 @@ export default function ProductDetail({ id, setClick }) {
       "cart",
       JSON.stringify([...cart, { ...ite, unId: Math.random() * 10 }])
     );
-    setClick(cart.length);
+    setClick(cart.length + 1);
   }
 
   return (

@@ -17,6 +17,7 @@ export default function Header({ click }) {
       setcart(JSON.parse(rawCart));
     }
   }, [click]);
+  console.log(click)
 
   return (
     <header class="sticky top-0 z-20 bg-neutral-100/50 backdrop-blur-md">
