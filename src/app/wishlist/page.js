@@ -2,16 +2,17 @@
 import React, { useEffect, useState } from "react";
 import Header from "../../../component/header";
 import Footer from "../../../component/footer";
-import { Alert, AlertTitle } from "@mui/material";
+import { Alert, AlertTitle, Button } from "@mui/material";
 import Link from "next/link";
 
-export default function Cart() {
+export default function Wishlist() {
   const [cart, setcart] = useState([]);
   const [click, setClick] = useState(0);
   const [showAlertCart, setShowAlertCart] = useState(false);
+  const [showAlertWishlist, setShowAlertWishlist] = useState(false);
 
   useEffect(() => {
-    let rawCart = localStorage.getItem("cart");
+    let rawCart = localStorage.getItem("wishlist");
 
     if (rawCart) {
       setcart(JSON.parse(rawCart));
@@ -19,23 +20,35 @@ export default function Cart() {
   }, []);
   function handleRemove(ite) {
     let filterData = cart.filter((ites) => ites.unId != ite.unId);
-    localStorage.setItem("cart", JSON.stringify(filterData));
-    let rawCart = localStorage.getItem("cart");
+    localStorage.setItem("wishlist", JSON.stringify(filterData));
+    let rawCart = localStorage.getItem("wishlist");
 
     if (rawCart) {
       setcart(JSON.parse(rawCart));
     }
     setClick(cart.length);
   }
+  function handlecart(ite) {
+    let rawCart = localStorage.getItem("cart");
+    let cart = [];
 
-  console.log(cart);
+    if (rawCart) {
+      cart = JSON.parse(rawCart);
+    }
+    localStorage.setItem(
+      "cart",
+      JSON.stringify([...cart, { ...ite, unId: Math.random() * 10 }])
+    );
+    setClick(cart.length + 1);
+  }
+
   return (
     <div>
       <Header click={click} />
       <main className="flex-1">
         <section className="mx-auto max-w-7xl p-8">
           <h1 className="mt-8 text-3xl font-bold text-neutral-900">
-            Your Shopping Cart
+            My Wishlist
           </h1>
           <div className="mt-12">
             <ul
@@ -71,46 +84,38 @@ export default function Cart() {
                         {ite.price}
                       </p>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-end">
                       <div className="text-sm font-bold"></div>
-                      <button
-                        type="button"
-                        className="text-sm text-neutral-500 hover:text-neutral-900"
-                        aria-disabled="false"
+                      <div className=" me-4">
+                        <Button
+                          variant="contained"
+                          style={{ backgroundColor: "#1976d2", color: "white" }}
+                          onClick={() => {
+                            handlecart(ite);
+                            setShowAlertCart(true);
+                          }}
+                        >
+                          Add To Cart
+                        </Button>
+                      </div>
+                      <Button
+                        variant="contained"
+                        style={{
+                          backgroundColor: "rgb(205 22 22)",
+                          color: "white",
+                        }}
                         onClick={() => {
+                          setShowAlertWishlist(true);
                           handleRemove(ite);
-                          setShowAlertCart(true);
                         }}
                       >
                         Remove<span className="sr-only">line from cart</span>
-                      </button>
+                      </Button>
                     </div>
                   </div>
                 </li>
               ))}
             </ul>
-            <div className="mt-12">
-              <div className="rounded border bg-neutral-50 px-4 py-2">
-                <div className="flex items-center justify-between gap-2 py-2">
-                  <div>
-                    <p className="font-semibold text-neutral-900">Your Total</p>
-                    <p className="mt-1 text-sm text-neutral-500">
-                      Shipping will be calculated in the next step
-                    </p>
-                  </div>
-                  <div className="font-medium text-neutral-900">
-                    {cart
-                      .map((item) => item.price)
-                      .reduce((acc, curr) => acc + curr, 0)}
-                  </div>
-                </div>
-              </div>
-              <div className="mt-10 text-center">
-                <button className="inline-block max-w-full rounded border border-transparent bg-neutral-900 px-6 py-3 text-center font-medium text-neutral-50 hover:bg-neutral-800 aria-disabled:cursor-not-allowed aria-disabled:bg-neutral-500 sm:px-16 w-full sm:w-1/3">
-                  Checkout
-                </button>
-              </div>
-            </div>
           </div>
         </section>
       </main>
@@ -118,7 +123,15 @@ export default function Cart() {
         <div className=" absolute top-20  right-5 border">
           <Alert severity="success" onClose={() => setShowAlertCart(false)}>
             <AlertTitle>Success</AlertTitle>
-            Removed from the cart
+            Added to the cart
+          </Alert>
+        </div>
+      )}
+      {showAlertWishlist && (
+        <div className=" absolute top-20  right-5 border">
+          <Alert severity="success" onClose={() => setShowAlertWishlist(false)}>
+            <AlertTitle>Success</AlertTitle>
+            Removed from wishlist
           </Alert>
         </div>
       )}
