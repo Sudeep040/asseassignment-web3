@@ -20,7 +20,7 @@ export default function Header({ click }) {
     <header class="sticky top-0 z-20 bg-neutral-100/50 backdrop-blur-md">
       <div class="mx-auto max-w-7xl px-3 sm:px-8">
         <div class="flex h-16 justify-between gap-4 md:gap-8 items-center font-bold">
-          <Link className=" space-x-2" aria-label="homepage" href="/">
+          <Link className=" space-x-2 text-2xl" aria-label="homepage" href="/">
             MASK
           </Link>
           <nav class="flex w-full gap-4 lg:gap-6" aria-label="Main navigation">
