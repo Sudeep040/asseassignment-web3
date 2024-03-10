@@ -27,6 +27,9 @@ export default function Wishlist() {
       setcart(JSON.parse(rawCart));
     }
     setClick(cart.length);
+    setTimeout(() => {
+      setShowAlertWishlist(false);
+    }, 1000);
   }
   function handlecart(ite) {
     let rawCart = localStorage.getItem("cart");
@@ -40,6 +43,9 @@ export default function Wishlist() {
       JSON.stringify([...cart, { ...ite, unId: Math.random() * 10 }])
     );
     setClick(cart.length + 1);
+    setTimeout(() => {
+      setShowAlertCart(false);
+    }, 1000);
   }
 
   return (

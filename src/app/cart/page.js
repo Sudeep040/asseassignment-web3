@@ -26,9 +26,11 @@ export default function Cart() {
       setcart(JSON.parse(rawCart));
     }
     setClick(cart.length);
+    setTimeout(() => {
+      setShowAlertCart(false);
+    }, 1000);
   }
 
-  console.log(cart);
   return (
     <div>
       <Header click={click} />

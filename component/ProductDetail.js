@@ -50,6 +50,9 @@ export default function ProductDetail({ id, setClick }) {
       JSON.stringify([...cart, { ...ite, unId: Math.random() * 10 }])
     );
     setClick(cart.length + 1);
+    setTimeout(() => {
+      setShowAlertCart(false);
+    }, 1000);
   }
   function addwishlist(ite) {
     let rawCart = localStorage.getItem("wishlist");
@@ -69,7 +72,11 @@ export default function ProductDetail({ id, setClick }) {
         "wishlist",
         JSON.stringify(cart.filter((obj) => obj.id != ite.id))
       );
+      setShowAlertWishlist(true);
     }
+    setTimeout(() => {
+      setShowAlertWishlist(false);
+    }, 1000);
   }
 
   return (
@@ -97,7 +104,7 @@ export default function ProductDetail({ id, setClick }) {
             onClick={() => {
               setfav(!fav);
               addwishlist(product);
-              setShowAlertWishlist(!fav);
+              setShowAlertWishlist(true);
             }}
           >
             {fav ? (
